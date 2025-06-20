@@ -1,0 +1,22 @@
+<header class="header">
+	<div class="heading-container header-content">
+		<a href="/">
+			<div class="logo-title header-title">
+				<img src="/images/logo.svg" alt="Access Granted logo" class="logo-icon" />
+				<h1>Access Granted</h1>
+			</div>
+		</a>
+		<nav>
+			<% if (typeof user !== 'undefined' && user) { %>
+				<span>Welcome, <%= user.first_name %>!</span>
+				<a href="/message/new">New Message</a>
+				<a href="/logout">Logout</a>
+				<% } else { %>
+				<a href="/login">Login</a>
+				<a href="/signup">Sign Up</a>
+			<% } %>
+			<a href="/features">Features</a>
+			<a href="/about">About</a>
+		</nav>
+	</div>
+</header>

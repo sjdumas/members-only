@@ -1,0 +1,13 @@
+<div class="greeting center-text">
+	<% if (user) { %>
+		<h1 class="center-text">Welcome back, <%= user.first_name %>!</h1>
+		<% if (!user.is_member) { %>
+		<p>You’re one step away from full access. <a href="/join">Enter the club passcode</a> to unlock author identities and post privileges.</p>
+		<% } else { %>
+		<p>You're now inside the circle. See what fellow members have posted and share your own anonymous thoughts.</p>
+		<% } %>
+	<% } else { %>
+		<h1 class="center-text">Welcome to Access Granted</h1>
+		<h2>Share whatever is on your mind.</h2>
+	<% } %>
+</div>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/style.css" />
+		<title>Join | Access Granted</title>
+	</head>
+	<body>
+		<%- include("partials/header") %>
+		<main>
+			<div class="container">
+				<div class="user-form">
+					<h1 class="center-text">Join the Club</h1>
+					<% if (errors.length > 0) { %>
+						<ul class="errors">
+							<% errors.forEach(error => { %>
+								<li><%= error %></li>
+							<% }) %>
+						</ul>
+					<% } %>
+					<form method="POST" action="/join">
+						<label>Secret Passcode</label>
+						<input type="password" name="passcode" required />
+						<button type="submit">Join</button>
+					</form>
+				</div>
+			</div>
+		</main>
+		<%- include("partials/footer") %>
+	</body>
+</html>

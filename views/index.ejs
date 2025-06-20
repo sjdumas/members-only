@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/style.css" />
+		<title>TOP: Access Granted</title>
+	</head>
+	<body>
+		<%- include("partials/header") %>
+		<main>
+			<div class="container">
+				<%- include("partials/greeting") %>
+				<div class="message-container">
+					<% messages.forEach(msg => { %>
+						<div class="message">
+							<h2><%= msg.title %></h2>
+							<p><%= msg.text %></p>
+							<% if (user && user.is_member) { %>
+								<p><strong>By:</strong> <%= msg.first_name %> <%= msg.last_name %></p>
+							<% } %>
+							<p><em><%= new Date(msg.timestamp).toLocaleString() %></em></p>
+							<% if (user && user.is_admin) { %>
+								<form method="POST" action="/message/<%= msg.id %>/delete" onsubmit="return confirm('Are you sure you want to delete this message?');">
+									<button type="submit">Delete</button>
+								</form>
+							<% } %>
+							<% if (user && !user.is_admin) { %>
+								<a href="/admin">Become Admin</a>
+							<% } %>
+							<hr />
+						</div>
+					<% }) %>
+				</div>
+			</div>
+		</main>
+		<%- include("partials/footer") %>
+	</body>
+</html>
