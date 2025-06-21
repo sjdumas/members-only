@@ -1,34 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="/style.css" />
-		<title>New Message | Access Granted</title>
-	</head>
-	<body>
-		<%- include("partials/header") %>
-		<main>
-			<div class="container">
-				<div class="user-form">
-					<h1 class="center-text">Create a Message</h1>
-					<% if (errors.length > 0) { %>
-						<ul class="errors">
-							<% errors.forEach(error => { %>
-								<li><%= error %></li>
-							<% }) %>
-						</ul>
-					<% } %>
-					<form method="POST" action="/message/new">
-						<label>Title</label>
-						<input type="text" name="title" required />
-						<label>Message</label>
-						<textarea name="text" required></textarea>
-						<button type="submit">Post Message</button>
-					</form>
-				</div>
-			</div>
-		</main>
-		<%- include("partials/footer") %>
-	</body>
-</html>
+<div class="user-form">
+	<h1 class="center-text">Post a New Message</h1>
+	<% if (errors.length > 0) { %>
+		<ul class="errors">
+			<% errors.forEach(error => { %>
+				<li><%= error %></li>
+			<% }) %>
+		</ul>
+	<% } %>
+	<form method="POST" action="/message/new">
+		<input type="text" name="title" placeholder="Post title" required />
+		<textarea name="text" placeholder="Your message..." required></textarea>
+		<button type="submit">Post Message</button>
+	</form>
+</div>

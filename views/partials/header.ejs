@@ -8,15 +8,17 @@
 		</a>
 		<nav>
 			<% if (typeof user !== 'undefined' && user) { %>
-				<span>Welcome, <%= user.first_name %>!</span>
-				<a href="/message/new">New Message</a>
-				<a href="/logout">Logout</a>
+				<h2>Welcome, <%= user.first_name %>!</h2>
+				<div class="user-info">
+					<a href="/message/new" class="new-post-btn">Post Message</a>
+					<a href="/logout">Logout</a>
+				</div>
 				<% } else { %>
 				<a href="/login">Login</a>
 				<a href="/signup">Sign Up</a>
+				<a href="/features">Features</a>
+				<a href="/about">About</a>
 			<% } %>
-			<a href="/features">Features</a>
-			<a href="/about">About</a>
 		</nav>
 	</div>
 </header>

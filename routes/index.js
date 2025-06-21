@@ -3,6 +3,18 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const pool = require("../db");
+const fs = require("fs");
+const ejs = require("ejs");
+const path = require("path");
+
+const renderWithLayout = (res, viewPath, options = {}) => {
+	res.render(viewPath, {
+		layout: "layout",
+		user: options.user || null,
+		title: options.title || "Access Granted",
+		...options,
+	});
+};
 
 const ensureAuthenticated = (req, res, next) => {
 	if (req.isAuthenticated()) {
@@ -13,69 +25,104 @@ const ensureAuthenticated = (req, res, next) => {
 
 // GET the basic pages
 router.get("/about", (req, res) => {
-	res.render("pages/about", { user: req.user });
+	renderWithLayout(res, "pages/about", {
+		title: "About | Access Granted",
+		user: req.user,
+	});
 });
 
 router.get("/features", (req, res) => {
-	res.render("pages/features", { user: req.user });
+		renderWithLayout(res, "pages/features", {
+		title: "Features | Access Granted",
+		user: req.user,
+	});
 });
 
 router.get("/faq", (req, res) => {
-	res.render("pages/faq", { user: req.user });
+		renderWithLayout(res, "pages/faq", {
+		title: "FAQ | Access Granted",
+		user: req.user,
+	});
 });
 
 router.get("/contact", (req, res) => {
-	res.render("pages/contact", { user: req.user });
+		renderWithLayout(res, "pages/contact", {
+		title: "Contact | Access Granted",
+		user: req.user,
+	});
 });
 
 router.get("/terms", (req, res) => {
-	res.render("pages/terms", { user: req.user });
+		renderWithLayout(res, "pages/terms", {
+		title: "Terms | Access Granted",
+		user: req.user,
+	});
 });
 
 router.get("/privacy", (req, res) => {
-	res.render("pages/privacy", { user: req.user });
+		renderWithLayout(res, "pages/privacy", {
+		title: "Privacy | Access Granted",
+		user: req.user,
+	});
 });
 
 // GET the Signup Form
 router.get("/signup", (req, res) => {
-	res.render("signup", { errors: [] });
+	res.render("signup", {
+		layout: "layout",
+		title: "Sign Up | Access Granted",
+		user: req.user || null,
+		errors: req.flash("error") || []
+	});
 });
 
 // GET the Join Form
 router.get("/join", ensureAuthenticated, (req, res) => {
-	res.render("join", { errors: [] });
+	res.render("join", { 
+		title: "Join | Access Granted",
+		errors: [] 
+	});
 });
 
 // GET the Admin Promotion Form
 router.get("/admin", ensureAuthenticated, (req, res) => {
-	res.render("admin", { errors: [] });
+	res.render("admin", { 
+		title: "Admin | Access Granted",
+		errors: [],
+	});
 });
 
 // GET the Login Form
 router.get("/login", (req, res) => {
-	res.render("login", { errors: [] });
+	res.render("login", {
+		title: "Login | Access Granted",
+	});
 });
 
 // GET the Logout Form
-router.get("/logout", (req, res) => {
-	res.logout(function (error) {
-		if (error) return next(error);
-		req.session.destroy(() => {
-			res.redirect("/");
+router.get("/logout", (req, res, next) => {
+	req.logout(function(err) {
+		if (err) return next(err);
+		res.render("logout", {
+			title: "Logged Out | Access Granted",
+			user: null, // Ensure no user is passed to the header
 		});
 	});
 });
 
 // GET the message creation form
 router.get("/message/new", ensureAuthenticated, (req, res) => {
-	res.render("message_form", { errors: [] });
+	res.render("message_form", { 
+		title: "Post New Message | Access Granted",
+		errors: [] 
+	});
 });
 
 // GET Home page to display all messages
 router.get("/", async (req, res) => {
 	try {
 		const result = await pool.query(
-			`
+		`
 			SELECT messages.*, users.first_name, users.last_name
 			FROM messages
 			JOIN users ON messages.author_id = users.id
@@ -230,11 +277,6 @@ router.post("/message/:id/delete", ensureAuthenticated, async (req, res) => {
 		console.error(error);
 		res.status(500).send("Error deleting message.");
 	}
-});
-
-// 404 Error Handling
-router.use((req, res) => {
-	res.status(404).render("pages/404", { user: req.user });
 });
 
 module.exports = router;
