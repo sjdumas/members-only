@@ -10,7 +10,7 @@
 			<p><em><%= new Date(msg.timestamp).toLocaleString() %></em></p>
 			<% if (user && user.is_admin) { %>
 				<form method="POST" action="/message/<%= msg.id %>/delete" onsubmit="return confirm('Are you sure you want to delete this message?');">
-					<button type="submit">Delete</button>
+					<button class="delete-btn" type="submit">Delete</button>
 				</form>
 			<% } %>
 			<% if (user && !user.is_admin) { %>
