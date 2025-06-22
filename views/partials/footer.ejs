@@ -1,7 +1,13 @@
 <footer class="footer">
 	<div class="footer-container">
 		<div class="footer-content">
-			<a href="/">&copy; <%= new Date().getFullYear() %> Access Granted</a>
+			<div class="footer-brand">
+				<a href="/" class="footer-logo">
+					<img src="/images/logo.svg" alt="Access Granted Logo" class="logo-icon" />
+					<span>Access Granted</span>
+				</a>
+				<p class="footer-tagline">A private members-only space for real conversations.</p>
+			</div>
 			<div class="footer-links">
 				<div class="footer-column">
 					<h4>Company</h4>
@@ -16,6 +22,10 @@
 					<a href="/features">Features</a>
 				</div>
 			</div>
+		</div>
+		<hr class="footer-divider" />
+		<div class="footer-bottom">
+			<p>&copy; <%= new Date().getFullYear() %> Access Granted</p>
 			<div class="social-links">
 				<a href="https://twitter.com" target="_blank" aria-label="Twitter">
 					<i class="fab fa-x-twitter"></i>

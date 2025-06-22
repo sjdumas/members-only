@@ -10,4 +10,20 @@
 		<button type="submit">Send</button>
 	</form>
 </div>
-
+<% if (success && success.length > 0) { %>
+	<div class="flash-wrapper">
+		<% success.forEach(function(msg) { %>
+			<div class="flash success flash-auto-hide" role="alert"><%= msg %></div>
+		<% }); %>
+	</div>
+<% } %>
+<script>
+	// Automatically hide flash messages after 6 seconds
+	setTimeout(() => {
+		document.querySelectorAll(".flash-auto-hide").forEach(msg => {
+		msg.style.transition = "opacity 0.5s ease-out";
+		msg.style.opacity = "0";
+		setTimeout(() => msg.remove(), 500);
+		});
+	}, 6000);
+</script>

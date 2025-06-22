@@ -12,7 +12,7 @@ const flash = require("connect-flash");
 const app = express();
 
 // Middleware
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(expressLayouts);
 app.set("views", path.join(__dirname, "views"));
@@ -30,13 +30,9 @@ app.use(
 app.use(flash());
 app.use((req, res, next) => {
 	res.locals.user = req.user || null;
-	res.locals.messages = req.flash("info") || [];
-	res.locals.errors = req.flash("error") || [];
-	next();
-});
-app.use((req, res, next) => {
 	res.locals.success = req.flash("success");
 	res.locals.errors = req.flash("error");
+	res.locals.messages = req.flash("info");
 	next();
 });
 

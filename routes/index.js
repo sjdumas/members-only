@@ -49,6 +49,7 @@ router.get("/contact", (req, res) => {
 		renderWithLayout(res, "pages/contact", {
 		title: "Contact | Access Granted",
 		user: req.user,
+		messages: req.flash(),
 	});
 });
 
@@ -277,6 +278,17 @@ router.post("/message/:id/delete", ensureAuthenticated, async (req, res) => {
 		console.error(error);
 		res.status(500).send("Error deleting message.");
 	}
+});
+
+// POST Send email
+router.post("/contact", (req, res) => {
+	const { name, email, message } = req.body;
+	console.log(
+		`Contact form submitted:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`
+	);
+
+	req.flash("success", "Your message has been received. Thank you for contacting us!");
+	res.redirect("/contact");
 });
 
 module.exports = router;
